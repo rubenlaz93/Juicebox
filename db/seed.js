@@ -1,23 +1,8 @@
 const {
     client,
     getAllUsers,
-    createUser
+    createUser,
   } = require('./index');
-  
-  async function createInitialUsers() {
-    try {
-      console.log("Starting to create users...");
-  
-      const albert = await createUser({ username: 'albert', password: 'bertie99' });
-  
-      console.log(albert);
-  
-      console.log("Finished creating users!");
-    } catch(error) {
-      console.error("Error creating users!");
-      throw error;
-    }
-  }
   
   async function dropTables() {
     try {
@@ -53,6 +38,21 @@ const {
     }
   }
   
+  async function createInitialUsers() {
+    try {
+      console.log("Starting to create users...");
+  
+      await createUser({ username: 'albert', password: 'bertie99' });
+      await createUser({ username: 'sandra', password: '2sandy4me' });
+      await createUser({ username: 'glamgal', password: 'soglam' });
+  
+      console.log("Finished creating users!");
+    } catch (error) {
+      console.error("Error creating users!");
+      throw error;
+    }
+  }
+  
   async function rebuildDB() {
     try {
       client.connect();
@@ -84,73 +84,3 @@ const {
     .then(testDB)
     .catch(console.error)
     .finally(() => client.end());
-
-
-
-
-
-
-
-
-
-
-
-// const { client, getAllUsers } = require('./index');
-
-// async function dropTables() {
-//     try {
-//       await client.query(`
-//         DROP TABLE IF EXISTS users;
-
-//     `);
-//     } catch (error) {
-//       throw error; // we pass the error up to the function that calls dropTables
-//     }
-//   }
-  
-//   // this function should call a query which creates all tables for our database 
-//   async function createTables() {
-//     try {
-//       await client.query(`
-//       CREATE TABLE users (
-//         id SERIAL PRIMARY KEY,
-//         username varchar(255) UNIQUE NOT NULL,
-//         password varchar(255) NOT NULL
-//         );
-//       `);
-//     } catch (error) {
-//       throw error; // we pass the error up to the function that calls createTables
-//     }
-//   }
-  
-//   async function rebuildDB() {
-//     try {
-//       client.connect();
-  
-//       await dropTables();
-//       await createTables();
-//     } catch (error) {
-//       console.error(error);
-//     } finally {
-//       client.end();
-//     }
-//   }
-  
-//   rebuildDB();
-
-
-//   // async function testDB() {
-// //   try {
-// //     client.connect();
-
-// //     const users = await getAllUsers();
-// //     console.log(users);
-// //   } catch (error) {
-// //     console.error(error);
-// //   } finally {
-// //     client.end();
-// //   }
-// // }
-
-// // testDB();
-
