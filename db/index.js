@@ -23,12 +23,11 @@ async function createUser({
   }
   
   async function updateUser(id, fields = {}) {
-    // build the set string
+
     const setString = Object.keys(fields).map(
       (key, index) => `"${ key }"=$${ index + 1 }`
     ).join(', ');
   
-    // return early if this is called without fields
     if (setString.length === 0) {
       return;
     }
@@ -80,9 +79,6 @@ async function createUser({
     }
   }
   
-  /**
-   * POST Methods
-   */
   
   async function createPost({
     authorId,
@@ -103,12 +99,11 @@ async function createUser({
   }
   
   async function updatePost(id, fields = {}) {
-    // build the set string
+
     const setString = Object.keys(fields).map(
       (key, index) => `"${ key }"=$${ index + 1 }`
     ).join(', ');
   
-    // return early if this is called without fields
     if (setString.length === 0) {
       return;
     }
